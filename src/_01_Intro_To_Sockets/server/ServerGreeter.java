@@ -9,7 +9,7 @@ public class ServerGreeter extends Thread {
 	public ServerGreeter() throws IOException {
 		//2. Initialize the ServerSocket object. In the parameters,
 		//   you must define the port at which the server will listen for connections.
-		sock = new ServerSocket(2326);
+		sock = new ServerSocket(35001);
 		//*OPTIONAL* you can set a time limit for the server to wait by using the 
 		//  ServerSocket's setSoTimeout(int timeInMilliSeconds) method
 	}
@@ -34,9 +34,9 @@ public class ServerGreeter extends Thread {
 				//12. Print the message from the DataInputStream object using the readUTF() method
 				//13. Create a DataOutputStream object. When initializing it, use the Server object you created in step 9 to call the getOutputStream() method.
 				//14. Use the DataOutputStream object to send a message to the client using the writeUTF(String message) method.
-				DataInputStream dis = (DataInputStream) sock2.getInputStream();
-		        dis.readUTF();
-				DataOutputStream dos = (DataOutputStream) sock2.getOutputStream();
+				DataInputStream dis = new DataInputStream (sock2.getInputStream());
+		        System.out.println(dis.readUTF());
+				DataOutputStream dos = new DataOutputStream(sock2.getOutputStream());
 		    	dos.writeUTF("beep beep");
 				//15. Close the client server
 		    	sock2.close();
@@ -57,7 +57,7 @@ public class ServerGreeter extends Thread {
 
 	public static void main(String[] args) {
 		//16. In a new thread, create an object of the ServerGreeter class and start the thread. Don't forget the try-catch.
-		System.out.println("(?) Starting server. Port 2326.");
+		System.out.println("(?) Starting server.");
 			try {
 				ServerGreeter t = new ServerGreeter();
 				System.out.println("(D) ServerGreeter Created");

@@ -10,7 +10,7 @@ public class ClientGreeter {
 	  // If you don't know how to find a computer's ip address, ask about ifconfig on linux/mac and ipconfig on windows.
       String ip = "192.168.7.223";
       //2. Create an integer for the server's port number
-      int port = 2326;
+      int port = 35001;
       //3. Surround steps 4-9 in a try-catch block that catches any IOExceptions.
       try {
     	 //4. Create an object of the Socket class. When initializing the object, pass in the ip address and the port number
@@ -22,7 +22,7 @@ public class ClientGreeter {
          //7. Create a DataInputStream object. When initializing it, use the Server object you created in step 4 to call the getInputStream() method.
     	 DataInputStream dis = new DataInputStream(sock.getInputStream());
          //8. Use the DataInputStream object to print a message from the server using the readUTF() method.
-         dis.readUTF();
+         System.out.println(dis.readUTF());
          //9. Close the client's server object
          sock.close();
       }
