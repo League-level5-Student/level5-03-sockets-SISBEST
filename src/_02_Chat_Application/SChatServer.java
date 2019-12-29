@@ -8,9 +8,9 @@ import javax.swing.*;
 
 public class SChatServer extends Thread implements ActionListener {
 	ServerSocket sock;
-	JFrame servwindow = new JFrame("Samuel Chat- SERVER PORT 35001");
+	JFrame servwindow = new JFrame("Samuel Chat");
 	JPanel p = new JPanel();
-	JLabel status = new JLabel("Connected to client - port 35001");
+	JLabel status = new JLabel("Connected to server");
 	JTextField msg = new JTextField("Beep Beep, I'm a sheep!");
 	JPanel chat = new JPanel();
 	JLabel intromsg = new JLabel("Welcome to Samuel Chat. Please, no NSFW content, and be nice.");
@@ -75,7 +75,7 @@ public class SChatServer extends Thread implements ActionListener {
 		if(button == check) {
 	        try {
 	        	DataInputStream dis = new DataInputStream (sock2.getInputStream());
-	        	if(dis.readUTF() != null) {
+	        	if(sock2.isConnected()) {
 	        		JLabel newmsg = new JLabel("<html><p style='color=rgb(120, 190, 32)'>Client: " + dis.readUTF() + "</p></html>");
 	        		chat.add(newmsg);
 	        		servwindow.pack();
@@ -84,11 +84,21 @@ public class SChatServer extends Thread implements ActionListener {
 	        		JOptionPane.showMessageDialog(null, "No new messages...", "Oopsies!", JOptionPane.ERROR_MESSAGE);
 	        	}
 	        } catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
 		else {
+			try {
+				DataOutputStream dos = new DataOutputStream(sock2.getOutputStream());
+				dos.writeUTF(msg.getText());
+				JLabel newmsg = new JLabel("<html><p style='color=rgb(120, 190, 32)'>Server: " + msg.getText() + "</p></html>");
+        		chat.add(newmsg);
+        		servwindow.pack();
+				
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			
 		}
 		
 	}
